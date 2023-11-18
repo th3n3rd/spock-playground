@@ -5,7 +5,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-class NewGameApi {
+class StartNewGameApi {
 
     @PostMapping("/games")
     NewGame handle() {

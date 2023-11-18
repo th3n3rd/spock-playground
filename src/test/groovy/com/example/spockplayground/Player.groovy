@@ -4,7 +4,7 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 
 class Player {
 
-    private Player.NewGame currentGame;
+    private NewGame currentGame;
     private final TestRestTemplate client
 
     Player(TestRestTemplate client) {
