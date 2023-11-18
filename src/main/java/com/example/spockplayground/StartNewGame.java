@@ -17,7 +17,6 @@ class StartNewGame {
     Game handle() {
         var secretWord = secretWords.nextWord();
         var newGame = new Game(UUID.randomUUID(), secretWord);
-        games.save(newGame);
-        return newGame;
+        return games.save(newGame);
     }
 }

@@ -12,8 +12,9 @@ class InMemoryGames implements Games {
     private final Map<UUID, Game> games = new HashMap<>();
 
     @Override
-    public void save(Game game) {
+    public Game save(Game game) {
         games.put(game.id(), game);
+        return game;
     }
 
     @Override
