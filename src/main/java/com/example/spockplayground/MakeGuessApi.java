@@ -28,6 +28,10 @@ class MakeGuessApi {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     void onGameAlreadyCompleted() {}
 
+    @ExceptionHandler(GameNotFound.class)
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    void onGameNotFound() {}
+
     record Guess(String word) {}
     record GuessMade(UUID id, int attempts) {}
 }

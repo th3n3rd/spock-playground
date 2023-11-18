@@ -43,4 +43,12 @@ class MakeGuessTests extends Specification {
         then:
         thrown(GameAlreadyCompleted)
     }
+
+    def "fail to make a guess for a non-existing game"() {
+        when:
+        useCase.handle(UUID.randomUUID(), "dont-care")
+
+        then:
+        thrown(GameNotFound)
+    }
 }

@@ -13,7 +13,7 @@ class MakeGuess {
     }
 
     Game handle(UUID gameId, String word) {
-        var game = games.findById(gameId).orElseThrow();
+        var game = games.findById(gameId).orElseThrow(GameNotFound::new);
         var updatedGame = game.guess(word);
         return games.save(updatedGame);
     }
