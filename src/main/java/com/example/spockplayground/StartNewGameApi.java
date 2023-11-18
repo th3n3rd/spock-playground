@@ -7,9 +7,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class StartNewGameApi {
 
+    private final StartNewGame useCase;
+
+    StartNewGameApi(StartNewGame useCase) {
+        this.useCase = useCase;
+    }
+
     @PostMapping("/games")
     NewGame handle() {
-        return new NewGame(UUID.randomUUID());
+        var newGame = useCase.handle();
+        return new NewGame(newGame.id());
     }
 
     record NewGame(UUID id) {}

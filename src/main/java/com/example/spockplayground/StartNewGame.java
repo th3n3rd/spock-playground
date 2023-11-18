@@ -1,7 +1,9 @@
 package com.example.spockplayground;
 
 import java.util.UUID;
+import org.springframework.stereotype.Component;
 
+@Component
 class StartNewGame {
 
     private final Games games;
