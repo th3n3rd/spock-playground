@@ -14,13 +14,20 @@ import static org.springframework.boot.test.context.SpringBootTest.WebEnvironmen
 class JourneyTests extends Specification {
 
     @Autowired
-    private TestRestTemplate client;
+    private TestRestTemplate client
+
+    @Autowired
+    private InMemorySecretWords secretWords
+
+    void setup() {
+        secretWords.add("correct")
+    }
 
     def "player journey"() {
         def player = new Player(client)
 
         player.startNewGame()
-        player.guess("right-guess")
+        player.guess("correct")
 
         expect:
         player.hasWon()
