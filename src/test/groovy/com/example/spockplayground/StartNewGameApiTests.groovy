@@ -9,6 +9,7 @@ import org.springframework.context.annotation.Import
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
+import static com.example.spockplayground.GamesMother.newGame
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -25,8 +26,7 @@ class StartNewGameApiTests extends Specification {
 
     def "starts a new game successfully"() {
         given:
-        def newGame = new Game(UUID.fromString("00000000-0000-0000-0000-000000000000"), "secret-word")
-        useCase.handle() >> newGame
+        useCase.handle() >> newGame()
 
         when:
         def result = client.perform(post("/games"))
