@@ -26,7 +26,7 @@ class StartNewGameApiTests extends Specification {
     @WithPlayer
     def "starts a new game successfully"() {
         given:
-        useCase.handle() >> newGame()
+        useCase.handle("some-player") >> newGame()
 
         when:
         def result = client.perform(post("/games"))
@@ -35,7 +35,8 @@ class StartNewGameApiTests extends Specification {
         result.andExpect(status().is2xxSuccessful())
         result.andExpect(content().json("""
         {
-            "id": "00000000-0000-0000-0000-000000000000"
+            "id": "00000000-0000-0000-0000-000000000000",
+            "playerId": "some-player"
         }
         """))
     }

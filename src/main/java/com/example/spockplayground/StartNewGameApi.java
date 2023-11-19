@@ -1,6 +1,8 @@
 package com.example.spockplayground;
 
 import java.util.UUID;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,10 +16,11 @@ class StartNewGameApi {
     }
 
     @PostMapping("/games")
-    NewGame handle() {
-        var newGame = useCase.handle();
-        return new NewGame(newGame.id());
+    NewGame handle(@AuthenticationPrincipal UserDetails player) {
+        System.out.println(player.getUsername());
+        var newGame = useCase.handle(player.getUsername());
+        return new NewGame(newGame.id(), newGame.playerId());
     }
 
-    record NewGame(UUID id) {}
+    record NewGame(UUID id, String playerId) {}
 }

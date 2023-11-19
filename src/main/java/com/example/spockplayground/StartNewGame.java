@@ -16,10 +16,10 @@ class StartNewGame {
         this.events = events;
     }
 
-    Game handle() {
+    Game handle(String playerId) {
         var secretWord = secretWords.nextWord();
-        var newGame = new Game(UUID.randomUUID(), secretWord);
-        events.publish(new GameStarted(newGame.id()));
+        var newGame = new Game(UUID.randomUUID(), playerId, secretWord);
+        events.publish(new GameStarted(newGame.id(), newGame.playerId()));
         return games.save(newGame);
     }
 }

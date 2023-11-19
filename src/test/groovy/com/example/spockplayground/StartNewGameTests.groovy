@@ -11,16 +11,24 @@ class StartNewGameTests extends Specification {
 
     def "new games are unique"() {
         when:
-        def firstGame = useCase.handle()
-        def secondGame = useCase.handle()
+        def firstGame = useCase.handle("dont-care")
+        def secondGame = useCase.handle("dont-care")
 
         then:
         firstGame != secondGame
     }
 
+    def "new games are associated with the user that started them"() {
+        when:
+        def newGame = useCase.handle("some-player")
+
+        then:
+        newGame.playerId() == "some-player"
+    }
+
     def "new games gets persisted"() {
         when:
-        def newGame = useCase.handle()
+        def newGame = useCase.handle("dont-care")
 
         then:
         !games.findById(newGame.id()).empty
@@ -32,8 +40,8 @@ class StartNewGameTests extends Specification {
         secretWords.add("second")
 
         when:
-        def firstGame = useCase.handle()
-        def secondGame = useCase.handle()
+        def firstGame = useCase.handle("dont-care")
+        def secondGame = useCase.handle("dont-care")
 
         then:
         firstGame.secretWord() == "first"
@@ -45,9 +53,9 @@ class StartNewGameTests extends Specification {
         secretWords.add("dont-care")
 
         when:
-        def game = useCase.handle()
+        def game = useCase.handle("some-player")
 
         then:
-        new GameStarted(game.id()) in events.findAll()
+        new GameStarted(game.id(), "some-player") in events.findAll()
     }
 }
