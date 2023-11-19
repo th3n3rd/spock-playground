@@ -1,12 +1,10 @@
 package com.example.spockplayground
 
 import com.example.spockplayground.common.WebSecurityConfig
-import org.spockframework.spring.SpringBean
 import org.spockframework.spring.SpringSpy
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.context.annotation.Import
-import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
@@ -25,7 +23,7 @@ class StartNewGameApiTests extends Specification {
     @SpringSpy
     private StartNewGame useCase
 
-    @WithMockUser
+    @WithPlayer
     def "starts a new game successfully"() {
         given:
         useCase.handle() >> newGame()
