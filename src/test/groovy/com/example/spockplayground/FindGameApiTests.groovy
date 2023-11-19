@@ -4,6 +4,7 @@ import com.example.spockplayground.common.WebSecurityConfig
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.context.annotation.Import
+import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
@@ -23,6 +24,7 @@ class FindGameApiTests extends Specification {
     @Autowired
     private InMemoryGames games
 
+    @WithMockUser
     def "retrieve details of an existing game successfully"() {
         given:
         def game = games.save(newGame())
@@ -41,6 +43,7 @@ class FindGameApiTests extends Specification {
         """))
     }
 
+    @WithMockUser
     def "fails to retrieve details for a non existing game"() {
         when:
         def result = client.perform(get("/games/{id}", UUID.randomUUID()))

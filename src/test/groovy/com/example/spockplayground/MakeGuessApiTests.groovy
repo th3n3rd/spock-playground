@@ -4,6 +4,7 @@ import com.example.spockplayground.common.WebSecurityConfig
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
 import org.springframework.context.annotation.Import
+import org.springframework.security.test.context.support.WithMockUser
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
@@ -23,6 +24,7 @@ class MakeGuessApiTests extends Specification {
     @Autowired
     private InMemoryGames games
 
+    @WithMockUser
     def "make any guess"() {
         given:
         def game = games.save(newGame())
@@ -44,6 +46,7 @@ class MakeGuessApiTests extends Specification {
         """))
     }
 
+    @WithMockUser
     def "make a guess on a completed game is not allowed"() {
         given:
         def game = games.save(wonGame())
@@ -59,6 +62,7 @@ class MakeGuessApiTests extends Specification {
         result.andExpect(status().isBadRequest())
     }
 
+    @WithMockUser
     def "fail to make a guess for a non-existing game"() {
         when:
         def result = client.perform(
