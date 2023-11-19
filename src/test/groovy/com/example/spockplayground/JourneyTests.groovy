@@ -27,6 +27,8 @@ class JourneyTests extends Specification {
         def player = new Player(client)
 
         player.startNewGame()
+        player.guess("first-try")
+        player.guess("second-try")
         player.guess("correct")
 
         expect:
