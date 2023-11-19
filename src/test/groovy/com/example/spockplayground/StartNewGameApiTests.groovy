@@ -1,6 +1,6 @@
 package com.example.spockplayground
 
-
+import com.example.spockplayground.common.WebSecurityConfig
 import org.spockframework.spring.SpringBean
 import org.spockframework.spring.SpringSpy
 import org.springframework.beans.factory.annotation.Autowired
@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest(StartNewGameApi)
-@Import([StartNewGame, InMemoryGames, InMemorySecretWords, InMemoryEvents])
+@Import([StartNewGame, InMemoryGames, InMemorySecretWords, InMemoryEvents, WebSecurityConfig])
 class StartNewGameApiTests extends Specification {
 
     @Autowired
