@@ -7,10 +7,6 @@ class Player {
     private NewGame currentGame;
     private final TestRestTemplate client
 
-    Player(TestRestTemplate client) {
-        this.client = client
-    }
-
     Player(TestRestTemplate client, String username, String password) {
         this.client = register(client, username, password)
     }
