@@ -15,7 +15,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest(StartNewGameApi)
-@Import([StartNewGame, InMemoryGames, InMemorySecretWords])
+@Import([StartNewGame, InMemoryGames, InMemorySecretWords, InMemoryEvents])
 class StartNewGameApiTests extends Specification {
 
     @Autowired

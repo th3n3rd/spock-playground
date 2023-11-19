@@ -6,7 +6,8 @@ class StartNewGameTests extends Specification {
 
     def secretWords = new InMemorySecretWords()
     def games = new InMemoryGames()
-    def useCase = new StartNewGame(games, secretWords)
+    def events = new InMemoryEvents()
+    def useCase = new StartNewGame(games, secretWords, events)
 
     def "new games are unique"() {
         when:
@@ -37,5 +38,16 @@ class StartNewGameTests extends Specification {
         then:
         firstGame.secretWord() == "first"
         secondGame.secretWord() == "second"
+    }
+
+    def "publish a new event when a new game starts"() {
+        given:
+        secretWords.add("dont-care")
+
+        when:
+        def game = useCase.handle()
+
+        then:
+        new GameStarted(game.id()) in events.findAll()
     }
 }
