@@ -11,6 +11,10 @@ class Player {
         this.client = client
     }
 
+    Player(TestRestTemplate client, String username, String password) {
+        this.client = register(client, username, password)
+    }
+
     void startNewGame() {
         def response = client.postForEntity("/games", null, NewGame)
         assert response.statusCode.is2xxSuccessful()
@@ -32,6 +36,13 @@ class Player {
         def response = client.getForEntity("/leaderboard", Leaderboard)
         assert response.statusCode.is2xxSuccessful()
         return response.body.rankings.first().position == position
+    }
+
+    private static TestRestTemplate register(TestRestTemplate client, String username, String password) {
+        def credentials = [username: username, password: password]
+        def response = client.postForEntity("/players", credentials, Void)
+        assert response.statusCode.is2xxSuccessful()
+        return client.withBasicAuth(username, password)
     }
 
     static class NewGame {
