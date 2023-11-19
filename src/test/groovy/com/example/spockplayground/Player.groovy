@@ -12,7 +12,7 @@ class Player {
     }
 
     void startNewGame() {
-        def response = client.postForEntity("/games", null, Player.NewGame)
+        def response = client.postForEntity("/games", null, NewGame)
         assert response.statusCode.is2xxSuccessful()
         currentGame = response.body
     }
@@ -23,9 +23,15 @@ class Player {
     }
 
     boolean hasWon() {
-        def response = client.getForEntity("/games/{id}", Player.GameDetails, currentGame.id)
+        def response = client.getForEntity("/games/{id}", GameDetails, currentGame.id)
         assert response.statusCode.is2xxSuccessful()
         return response.body.won
+    }
+
+    boolean hasRank(int position) {
+        def response = client.getForEntity("/leaderboard", Leaderboard)
+        assert response.statusCode.is2xxSuccessful()
+        return response.body.rankings.first().position == position
     }
 
     static class NewGame {
@@ -34,5 +40,13 @@ class Player {
 
     static class GameDetails {
         boolean won
+    }
+
+    static class Leaderboard {
+        List<PlayerRank> rankings
+    }
+
+    static class PlayerRank {
+        int position
     }
 }
