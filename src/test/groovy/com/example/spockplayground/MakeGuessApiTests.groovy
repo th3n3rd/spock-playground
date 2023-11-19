@@ -1,22 +1,20 @@
 package com.example.spockplayground
 
-import org.spockframework.spring.SpringSpy
+
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest
-import org.springframework.boot.test.web.client.TestRestTemplate
 import org.springframework.context.annotation.Import
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
 import static com.example.spockplayground.GamesMother.newGame
-import static com.example.spockplayground.GamesMother.testGameId
 import static com.example.spockplayground.GamesMother.wonGame
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
 
 @WebMvcTest(MakeGuessApi)
-@Import([MakeGuess, InMemoryGames])
+@Import([MakeGuess, InMemoryGames, InMemoryEvents])
 class MakeGuessApiTests extends Specification {
 
     @Autowired

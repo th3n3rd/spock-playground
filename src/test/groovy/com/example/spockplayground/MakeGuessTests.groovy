@@ -7,8 +7,9 @@ import static com.example.spockplayground.GamesMother.wonGame
 
 class MakeGuessTests extends Specification {
 
+    def events = new InMemoryEvents()
     def games = new InMemoryGames()
-    def useCase = new MakeGuess(games)
+    def useCase = new MakeGuess(games, events)
 
     def "any new guess increases the recorded attempts in a game by one"() {
         given:
@@ -50,5 +51,32 @@ class MakeGuessTests extends Specification {
 
         then:
         thrown(GameNotFound)
+    }
+
+    def "publish a new event when a new guess is made"() {
+        given:
+        def game = games.save(newGame())
+
+        when:
+        game = useCase.handle(game.id(), "dont-care")
+
+        then:
+        [
+            new GuessMade(game.id(), 1)
+        ] == events.findAll()
+    }
+
+    def "publish a new event when the correct guess is made and the game is won"() {
+        given:
+        def game = games.save(newGame())
+
+        when:
+        game = useCase.handle(game.id(), game.secretWord())
+
+        then:
+        [
+            new GuessMade(game.id(), 1),
+            new GameWon(game.id(), 1)
+        ] == events.findAll()
     }
 }
