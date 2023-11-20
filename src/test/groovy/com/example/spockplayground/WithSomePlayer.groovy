@@ -6,4 +6,4 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 @Retention(RetentionPolicy.RUNTIME)
 @WithMockUser(username = "some-player")
-@interface WithPlayer {}
+@interface WithSomePlayer {}

@@ -8,8 +8,6 @@ import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
 import static com.example.spockplayground.GamesMother.*
-import static com.example.spockplayground.GamesMother.newGame
-import static com.example.spockplayground.GamesMother.wonGame
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status
@@ -24,7 +22,7 @@ class MakeGuessApiTests extends Specification {
     @Autowired
     private InMemoryGames games
 
-    @WithPlayer
+    @WithSomePlayer
     def "make any guess"() {
         given:
         def game = games.save(newGame("some-player"))
@@ -47,7 +45,7 @@ class MakeGuessApiTests extends Specification {
         """))
     }
 
-    @WithPlayer
+    @WithSomePlayer
     def "make a guess on a completed game is not allowed"() {
         given:
         def game = games.save(wonGame("some-player"))
@@ -63,7 +61,7 @@ class MakeGuessApiTests extends Specification {
         result.andExpect(status().isBadRequest())
     }
 
-    @WithPlayer
+    @WithSomePlayer
     def "fail to make a guess for a non-existing game"() {
         when:
         def result = client.perform(
@@ -76,7 +74,7 @@ class MakeGuessApiTests extends Specification {
         result.andExpect(status().isNotFound())
     }
 
-    @WithPlayer
+    @WithSomePlayer
     def "make a guess non another player's game is not allowed"() {
         given:
         def game = games.save(newGame("another-player"))

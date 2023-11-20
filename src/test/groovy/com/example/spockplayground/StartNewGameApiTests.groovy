@@ -23,7 +23,7 @@ class StartNewGameApiTests extends Specification {
     @SpringSpy
     private StartNewGame useCase
 
-    @WithPlayer
+    @WithSomePlayer
     def "starts a new game successfully"() {
         given:
         useCase.handle("some-player") >> newGame()

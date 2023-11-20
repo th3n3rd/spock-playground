@@ -23,7 +23,7 @@ class FindGameApiTests extends Specification {
     @Autowired
     private InMemoryGames games
 
-    @WithPlayer
+    @WithSomePlayer
     def "retrieve details of an existing game successfully"() {
         given:
         def game = games.save(newGame("some-player"))
@@ -43,7 +43,7 @@ class FindGameApiTests extends Specification {
         """))
     }
 
-    @WithPlayer
+    @WithSomePlayer
     def "fails to retrieve details for a non existing game"() {
         when:
         def result = client.perform(get("/games/{id}", anyGameId()))
@@ -52,7 +52,7 @@ class FindGameApiTests extends Specification {
         result.andExpect(status().isNotFound())
     }
 
-    @WithPlayer
+    @WithSomePlayer
     def "retrieving details for another player's game is not allowed"() {
         given:
         def game = games.save(newGame("another-player"))
