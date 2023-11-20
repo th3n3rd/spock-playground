@@ -7,17 +7,23 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 class LeaderboardApi {
 
+    private final Leaderboard leaderboard;
+
+    LeaderboardApi(Leaderboard leaderboard) {
+        this.leaderboard = leaderboard;
+    }
+
     @GetMapping("/leaderboard")
-    Leaderboard handle() {
-        return new Leaderboard(
-            List.of(
-                new Leaderboard.Ranking("player-2", 50),
-                new Leaderboard.Ranking("player-1", 25)
-            )
+    LeaderboardDetails handle() {
+        return new LeaderboardDetails(
+            leaderboard.findAll()
+                .stream()
+                .map(it -> new LeaderboardDetails.Ranking(it.playerId(), it.score()))
+                .toList()
         );
     }
 
-    record Leaderboard(List<Ranking> rankings) {
+    record LeaderboardDetails(List<Ranking> rankings) {
         record Ranking(String playerId, int score) {}
     }
 }

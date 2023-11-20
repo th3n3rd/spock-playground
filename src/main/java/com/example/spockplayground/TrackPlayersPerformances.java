@@ -1,5 +1,8 @@
 package com.example.spockplayground;
 
+import org.springframework.stereotype.Component;
+
+@Component
 class TrackPlayersPerformances {
 
     private final Leaderboard leaderboard;

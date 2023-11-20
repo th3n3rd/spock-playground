@@ -9,7 +9,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.TreeMap;
 import java.util.UUID;
+import org.springframework.stereotype.Repository;
 
+@Repository
 class InMemoryLeaderboard implements Leaderboard {
     private final Map<String, Ranking> rankingByPlayer = new TreeMap<>();
 
@@ -29,5 +31,9 @@ class InMemoryLeaderboard implements Leaderboard {
             .stream()
             .sorted(comparingInt(Ranking::score).reversed())
             .toList();
+    }
+
+    void withRanking(String playerId, int score) {
+        rankingByPlayer.put(playerId, new Ranking(playerId, score));
     }
 }

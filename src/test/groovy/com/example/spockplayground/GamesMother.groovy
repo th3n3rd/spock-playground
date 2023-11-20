@@ -6,6 +6,10 @@ class GamesMother {
     static String testPlayerId = "some-player"
     static String testSecretWord = "secret-word"
 
+    static def anyGameId() {
+        return UUID.randomUUID()
+    }
+
     static def newGame(String playerId = testPlayerId) {
         return new Game(testGameId, playerId, testSecretWord)
     }
