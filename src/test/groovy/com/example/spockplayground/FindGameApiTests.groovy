@@ -25,7 +25,7 @@ class FindGameApiTests extends Specification {
     @WithPlayer
     def "retrieve details of an existing game successfully"() {
         given:
-        def game = games.save(newGame())
+        def game = games.save(newGame("some-player"))
 
         when:
         def result = client.perform(get("/games/{id}", game.id()))
@@ -35,6 +35,7 @@ class FindGameApiTests extends Specification {
         result.andExpect(content().json("""
         {
             "id": "00000000-0000-0000-0000-000000000000",
+            "playerId": "some-player",
             "attempts": 0,
             "won": false
         }
@@ -48,5 +49,17 @@ class FindGameApiTests extends Specification {
 
         then:
         result.andExpect(status().isNotFound())
+    }
+
+    @WithPlayer
+    def "retrieving details for another player's game is not allowed"() {
+        given:
+        def game = games.save(newGame("another-player"))
+
+        when:
+        def result = client.perform(get("/games/{id}", game.id()))
+
+        then:
+        result.andExpect(status().isForbidden())
     }
 }
