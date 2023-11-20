@@ -14,12 +14,12 @@ class MakeGuess {
         this.events = events;
     }
 
-    Game handle(UUID gameId, String word) {
+    Game handle(UUID gameId, String playerId, String word) {
         var game = games.findById(gameId).orElseThrow(GameNotFound::new);
-        var updatedGame = game.guess(word);
-        events.publish(new GuessMade(updatedGame.id(), updatedGame.attempts()));
+        var updatedGame = game.guess(playerId, word);
+        events.publish(new GuessMade(updatedGame.id(), updatedGame.playerId(), updatedGame.attempts()));
         if (updatedGame.won()) {
-            events.publish(new GameWon(updatedGame.id(), updatedGame.attempts()));
+            events.publish(new GameWon(updatedGame.id(), updatedGame.playerId(), updatedGame.attempts()));
         }
         return games.save(updatedGame);
     }

@@ -2,6 +2,8 @@ package com.example.spockplayground;
 
 import java.util.UUID;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,10 +21,14 @@ class MakeGuessApi {
     }
 
     @PostMapping("/games/{id}/guesses")
-    GuessMade handle(@PathVariable UUID id, @RequestBody Guess guess) {
-        var game = useCase.handle(id, guess.word());
-        return new GuessMade(game.id(), game.attempts());
+    GuessMade handle(@PathVariable UUID id, @RequestBody Guess guess, @AuthenticationPrincipal UserDetails player) {
+        var game = useCase.handle(id, player.getUsername(), guess.word());
+        return new GuessMade(game.id(), game.playerId(), game.attempts());
     }
+
+    @ExceptionHandler(GameForbidden.class)
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    void onGameForbidden() {}
 
     @ExceptionHandler(GameAlreadyCompleted.class)
     @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -33,5 +39,5 @@ class MakeGuessApi {
     void onGameNotFound() {}
 
     record Guess(String word) {}
-    record GuessMade(UUID id, int attempts) {}
+    record GuessMade(UUID id, String playerId, int attempts) {}
 }

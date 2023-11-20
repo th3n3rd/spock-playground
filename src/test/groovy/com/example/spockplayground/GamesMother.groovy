@@ -6,12 +6,12 @@ class GamesMother {
     static String testPlayerId = "some-player"
     static String testSecretWord = "secret-word"
 
-    static def newGame() {
-        return new Game(testGameId, testPlayerId, testSecretWord)
+    static def newGame(String playerId = testPlayerId) {
+        return new Game(testGameId, playerId, testSecretWord)
     }
 
-    static def wonGame() {
-        return new Game(testGameId, testSecretWord, 1, true)
+    static def wonGame(String playerId = testPlayerId) {
+        return new Game(testGameId, playerId, testSecretWord, 1, true)
     }
 
 }

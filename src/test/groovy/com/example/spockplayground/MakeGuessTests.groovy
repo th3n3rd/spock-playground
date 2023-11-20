@@ -16,8 +16,8 @@ class MakeGuessTests extends Specification {
         def game = games.save(newGame())
 
         when:
-        game = useCase.handle(game.id(), "incorrect")
-        game = useCase.handle(game.id(), game.secretWord())
+        game = useCase.handle(game.id(), game.playerId(), "incorrect")
+        game = useCase.handle(game.id(), game.playerId(), game.secretWord())
 
         then:
         game.attempts() == 2
@@ -28,7 +28,7 @@ class MakeGuessTests extends Specification {
         def game = games.save(newGame())
 
         when:
-        game = useCase.handle(game.id(), game.secretWord())
+        game = useCase.handle(game.id(), game.playerId(), game.secretWord())
 
         then:
         game.won()
@@ -39,15 +39,26 @@ class MakeGuessTests extends Specification {
         def game = games.save(wonGame())
 
         when:
-        useCase.handle(game.id(), game.secretWord())
+        useCase.handle(game.id(), game.playerId(), game.secretWord())
 
         then:
         thrown(GameAlreadyCompleted)
     }
 
+    def "making a guess on a game started by another player is not allowed"() {
+        given:
+        def game = games.save(newGame("player-1"))
+
+        when:
+        useCase.handle(game.id(), "player-2", game.secretWord())
+
+        then:
+        thrown(GameForbidden)
+    }
+
     def "fail to make a guess for a non-existing game"() {
         when:
-        useCase.handle(UUID.randomUUID(), "dont-care")
+        useCase.handle(UUID.randomUUID(), "dont-care", "dont-care")
 
         then:
         thrown(GameNotFound)
@@ -55,28 +66,28 @@ class MakeGuessTests extends Specification {
 
     def "publish a new event when a new guess is made"() {
         given:
-        def game = games.save(newGame())
+        def game = games.save(newGame("some-player"))
 
         when:
-        game = useCase.handle(game.id(), "dont-care")
+        game = useCase.handle(game.id(), game.playerId(), "dont-care")
 
         then:
         [
-            new GuessMade(game.id(), 1)
+            new GuessMade(game.id(), "some-player", 1)
         ] == events.findAll()
     }
 
     def "publish a new event when the correct guess is made and the game is won"() {
         given:
-        def game = games.save(newGame())
+        def game = games.save(newGame("some-player"))
 
         when:
-        game = useCase.handle(game.id(), game.secretWord())
+        game = useCase.handle(game.id(), game.playerId(), game.secretWord())
 
         then:
         [
-            new GuessMade(game.id(), 1),
-            new GameWon(game.id(), 1)
+            new GuessMade(game.id(), "some-player", 1),
+            new GameWon(game.id(), "some-player", 1)
         ] == events.findAll()
     }
 }

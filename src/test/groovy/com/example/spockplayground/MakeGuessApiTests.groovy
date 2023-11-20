@@ -26,7 +26,7 @@ class MakeGuessApiTests extends Specification {
     @WithPlayer
     def "make any guess"() {
         given:
-        def game = games.save(newGame())
+        def game = games.save(newGame("some-player"))
 
         when:
         def result = client.perform(
@@ -40,6 +40,7 @@ class MakeGuessApiTests extends Specification {
         result.andExpect(content().json("""
         {
             "id": "00000000-0000-0000-0000-000000000000",
+            "playerId": "some-player",
             "attempts": 1
         }
         """))
@@ -48,7 +49,7 @@ class MakeGuessApiTests extends Specification {
     @WithPlayer
     def "make a guess on a completed game is not allowed"() {
         given:
-        def game = games.save(wonGame())
+        def game = games.save(wonGame("some-player"))
 
         when:
         def result = client.perform(
@@ -72,5 +73,21 @@ class MakeGuessApiTests extends Specification {
 
         then:
         result.andExpect(status().isNotFound())
+    }
+
+    @WithPlayer
+    def "make a guess non another player's game is not allowed"() {
+        given:
+        def game = games.save(newGame("another-player"))
+
+        when:
+        def result = client.perform(
+            post("/games/{id}/guesses", game.id())
+                .content("""{ "word": "${game.secretWord()}" }""")
+                .contentType("application/json")
+        )
+
+        then:
+        result.andExpect(status().isForbidden())
     }
 }
