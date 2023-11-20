@@ -2,10 +2,12 @@ package com.example.spockplayground
 
 import spock.lang.Specification
 
+import static com.example.spockplayground.GamesMother.anyGameId
+
 class LeaderboardScoringTests extends Specification {
 
-    def anyGameId = UUID.randomUUID()
-    def anotherGameId = UUID.randomUUID()
+    def anyGameId = anyGameId()
+    def anotherGameId = anyGameId()
     def player1 = "player-1"
     def player2 = "player-2"
     def leaderboard = new InMemoryLeaderboard()

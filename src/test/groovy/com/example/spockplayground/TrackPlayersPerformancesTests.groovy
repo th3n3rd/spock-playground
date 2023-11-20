@@ -2,12 +2,15 @@ package com.example.spockplayground
 
 import spock.lang.Specification
 
+import static com.example.spockplayground.GamesMother.anyGameId
+
 class TrackPlayersPerformancesTests extends Specification {
 
-    def firstGameId = UUID.randomUUID()
-    def secondGameId = UUID.randomUUID()
+    def firstGameId = anyGameId()
+    def secondGameId = anyGameId()
     def player1 = "player-1"
     def player2 = "player-2"
+
     def events = new InMemoryEvents()
     def leaderboard = new InMemoryLeaderboard()
     def useCase = new TrackPlayersPerformances(events, leaderboard)

@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Import
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
+import static com.example.spockplayground.GamesMother.anyGameId
 import static com.example.spockplayground.GamesMother.newGame
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
@@ -45,7 +46,7 @@ class FindGameApiTests extends Specification {
     @WithPlayer
     def "fails to retrieve details for a non existing game"() {
         when:
-        def result = client.perform(get("/games/{id}", UUID.randomUUID()))
+        def result = client.perform(get("/games/{id}", anyGameId()))
 
         then:
         result.andExpect(status().isNotFound())

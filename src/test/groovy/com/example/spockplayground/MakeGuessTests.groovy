@@ -2,6 +2,7 @@ package com.example.spockplayground
 
 import spock.lang.Specification
 
+import static com.example.spockplayground.GamesMother.*
 import static com.example.spockplayground.GamesMother.newGame
 import static com.example.spockplayground.GamesMother.wonGame
 
@@ -58,7 +59,7 @@ class MakeGuessTests extends Specification {
 
     def "fail to make a guess for a non-existing game"() {
         when:
-        useCase.handle(UUID.randomUUID(), "dont-care", "dont-care")
+        useCase.handle(anyGameId(), "dont-care", "dont-care")
 
         then:
         thrown(GameNotFound)

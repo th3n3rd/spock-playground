@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Import
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
+import static com.example.spockplayground.GamesMother.*
 import static com.example.spockplayground.GamesMother.newGame
 import static com.example.spockplayground.GamesMother.wonGame
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
@@ -66,7 +67,7 @@ class MakeGuessApiTests extends Specification {
     def "fail to make a guess for a non-existing game"() {
         when:
         def result = client.perform(
-            post("/games/{id}/guesses", UUID.randomUUID())
+            post("/games/{id}/guesses", anyGameId())
                 .content("""{ "word": "dont-care" }""")
                 .contentType("application/json")
         )
