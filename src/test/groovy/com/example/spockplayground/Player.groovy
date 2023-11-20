@@ -28,10 +28,13 @@ class Player {
         return response.body.won
     }
 
-    boolean hasRank(int position) {
+    void checkLeaderboard(rankings) {
         def response = client.getForEntity("/leaderboard", Leaderboard)
         assert response.statusCode.is2xxSuccessful()
-        return response.body.rankings.first().position == position
+        def actualRankings = response.body.rankings.collect {
+            [playerId: it.playerId, score: it.score]
+        }
+        assert rankings == actualRankings
     }
 
     private static TestRestTemplate register(TestRestTemplate client, String username, String password) {
@@ -54,6 +57,7 @@ class Player {
     }
 
     static class PlayerRank {
-        int position
+        String playerId
+        int score
     }
 }

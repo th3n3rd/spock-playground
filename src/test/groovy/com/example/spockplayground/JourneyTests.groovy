@@ -31,6 +31,7 @@ class JourneyTests extends Specification {
         player.startNewGame()
         player.guess("first-try")
         player.guess("second-try")
+        player.guess("third-try")
         player.guess("correct")
 
         expect:
@@ -40,7 +41,14 @@ class JourneyTests extends Specification {
     def "track performances journey"() {
         def player = new Player(client, "player-2", "password-2")
 
+        player.startNewGame()
+        player.guess("first-try")
+        player.guess("correct")
+
         expect:
-        player.hasRank(1)
+        player.checkLeaderboard([
+            [playerId: "player-2", score: 50],
+            [playerId: "player-1", score: 25],
+        ])
     }
 }

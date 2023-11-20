@@ -17,7 +17,6 @@ class StartNewGameApi {
 
     @PostMapping("/games")
     NewGame handle(@AuthenticationPrincipal UserDetails player) {
-        System.out.println(player.getUsername());
         var newGame = useCase.handle(player.getUsername());
         return new NewGame(newGame.id(), newGame.playerId());
     }

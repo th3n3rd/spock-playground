@@ -11,12 +11,13 @@ class LeaderboardApi {
     Leaderboard handle() {
         return new Leaderboard(
             List.of(
-                new Leaderboard.Ranking(1)
+                new Leaderboard.Ranking("player-2", 50),
+                new Leaderboard.Ranking("player-1", 25)
             )
         );
     }
 
     record Leaderboard(List<Ranking> rankings) {
-        record Ranking(int position) {}
+        record Ranking(String playerId, int score) {}
     }
 }
