@@ -22,10 +22,16 @@ class Player {
         assert response.statusCode.is2xxSuccessful()
     }
 
-    boolean hasWon() {
+    void hasWon() {
         def response = client.getForEntity("/games/{id}", GameDetails, currentGame.id)
         assert response.statusCode.is2xxSuccessful()
-        return response.body.won
+        assert response.body.won
+    }
+
+    void hasLost() {
+        def response = client.getForEntity("/games/{id}", GameDetails, currentGame.id)
+        assert response.statusCode.is2xxSuccessful()
+        assert response.body.lost
     }
 
     void checkLeaderboard(rankings) {
@@ -50,6 +56,7 @@ class Player {
 
     static class GameDetails {
         boolean won
+        boolean lost
     }
 
     static class Leaderboard {

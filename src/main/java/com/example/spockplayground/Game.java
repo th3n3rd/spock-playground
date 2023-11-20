@@ -11,9 +11,13 @@ record Game(UUID id, String playerId, String secretWord, int attempts, boolean w
         if (!playerId().equals(playerId)) {
             throw new GameForbidden();
         }
-        if (won) {
+        if (won || lost()) {
             throw new GameAlreadyCompleted();
         }
         return new Game(id, playerId, secretWord, attempts + 1, secretWord.equals(word));
+    }
+
+    boolean lost() {
+        return attempts >= secretWord.length();
     }
 }

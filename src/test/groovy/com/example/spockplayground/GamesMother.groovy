@@ -18,4 +18,7 @@ class GamesMother {
         return new Game(testGameId, playerId, testSecretWord, 1, true)
     }
 
+    static def lostGame() {
+        return new Game(testGameId, testPlayerId, testSecretWord, testSecretWord.size(), false)
+    }
 }

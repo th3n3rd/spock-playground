@@ -25,7 +25,13 @@ class FindGameApi {
         if (!game.playerId().equals(player.getUsername())) {
             throw new GameForbidden();
         }
-        return new GameDetails(game.id(), game.playerId(), game.attempts(), game.won());
+        return new GameDetails(
+            game.id(),
+            game.playerId(),
+            game.attempts(),
+            game.won(),
+            game.lost()
+        );
     }
 
     @ExceptionHandler(GameNotFound.class)
@@ -36,5 +42,5 @@ class FindGameApi {
     @ResponseStatus(HttpStatus.FORBIDDEN)
     void onGameForbidden() {}
 
-    record GameDetails(UUID id, String playerId, int attempts, boolean won) {}
+    record GameDetails(UUID id, String playerId, int attempts, boolean won, boolean lost) {}
 }

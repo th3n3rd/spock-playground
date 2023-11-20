@@ -3,8 +3,6 @@ package com.example.spockplayground
 import spock.lang.Specification
 
 import static com.example.spockplayground.GamesMother.*
-import static com.example.spockplayground.GamesMother.newGame
-import static com.example.spockplayground.GamesMother.wonGame
 
 class MakeGuessTests extends Specification {
 
@@ -35,9 +33,33 @@ class MakeGuessTests extends Specification {
         game.won()
     }
 
-    def "making a guess on a completed game is not allowed"() {
+    def "exceeding the max number of attempts record a lost in the game"() {
+        given:
+        def game = games.save(newGame())
+
+        when:
+        for (i in game.secretWord()) {
+            game = useCase.handle(game.id(), game.playerId(), "incorrect")
+        }
+
+        then:
+        game.lost()
+    }
+
+    def "making a guess on an already won game is not allowed"() {
         given:
         def game = games.save(wonGame())
+
+        when:
+        useCase.handle(game.id(), game.playerId(), game.secretWord())
+
+        then:
+        thrown(GameAlreadyCompleted)
+    }
+
+    def "making a guess on an already lost game is not allowed"() {
+        given:
+        def game = games.save(lostGame())
 
         when:
         useCase.handle(game.id(), game.playerId(), game.secretWord())

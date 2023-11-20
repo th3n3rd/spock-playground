@@ -25,7 +25,7 @@ class JourneyTests extends Specification {
         secretWords.add("correct")
     }
 
-    def "gameplay journey"() {
+    def "winning gameplay journey"() {
         def player = new Player(client, "player-1", "password-1")
 
         player.startNewGame()
@@ -50,5 +50,18 @@ class JourneyTests extends Specification {
             [playerId: "player-2", score: 50],
             [playerId: "player-1", score: 25],
         ])
+    }
+
+    def "losing gameplay journey"() {
+        def player = new Player(client, "player-3", "password-3")
+
+        player.startNewGame()
+        def maxAttempts = "correct".size()
+        for (i in 1..maxAttempts) {
+            player.guess("next-try")
+        }
+
+        expect:
+        player.hasLost()
     }
 }

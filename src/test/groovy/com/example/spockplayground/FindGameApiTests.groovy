@@ -38,7 +38,8 @@ class FindGameApiTests extends Specification {
             "id": "00000000-0000-0000-0000-000000000000",
             "playerId": "some-player",
             "attempts": 0,
-            "won": false
+            "won": false,
+            "lost": false
         }
         """))
     }
