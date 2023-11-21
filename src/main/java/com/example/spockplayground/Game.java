@@ -20,4 +20,8 @@ record Game(UUID id, String playerId, String secretWord, int attempts, boolean w
     boolean lost() {
         return attempts >= secretWord.length();
     }
+
+    String hint() {
+        return "_".repeat(secretWord.length());
+    }
 }

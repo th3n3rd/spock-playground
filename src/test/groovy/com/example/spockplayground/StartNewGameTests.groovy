@@ -26,6 +26,24 @@ class StartNewGameTests extends Specification {
         newGame.playerId() == "some-player"
     }
 
+    def "new games start with a first hint that reveal the number of characters"(String secretWord, String expectedHint) {
+        given:
+        secretWords.add(secretWord)
+
+        when:
+        def newGame = useCase.handle("dont-care")
+
+        then:
+        newGame.hint() == expectedHint
+
+        where:
+        secretWord                   | expectedHint
+        "a"                          | "_"
+        "ab"                         | "__"
+        "abc"                        | "___"
+        "abcdefghijklmnopqrstuvwxyz" | "__________________________"
+    }
+
     def "new games gets persisted"() {
         when:
         def newGame = useCase.handle("dont-care")

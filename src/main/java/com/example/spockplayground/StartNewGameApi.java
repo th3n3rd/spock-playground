@@ -18,8 +18,8 @@ class StartNewGameApi {
     @PostMapping("/games")
     NewGame handle(@AuthenticationPrincipal UserDetails player) {
         var newGame = useCase.handle(player.getUsername());
-        return new NewGame(newGame.id(), newGame.playerId());
+        return new NewGame(newGame.id(), newGame.playerId(), newGame.hint());
     }
 
-    record NewGame(UUID id, String playerId) {}
+    record NewGame(UUID id, String playerId, String hint) {}
 }

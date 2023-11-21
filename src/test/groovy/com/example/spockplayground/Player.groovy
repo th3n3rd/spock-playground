@@ -4,7 +4,8 @@ import org.springframework.boot.test.web.client.TestRestTemplate
 
 class Player {
 
-    private NewGame currentGame;
+    private NewGame currentGame
+    private String lastHint
     private final TestRestTemplate client
 
     Player(TestRestTemplate client, String username, String password) {
@@ -15,6 +16,11 @@ class Player {
         def response = client.postForEntity("/games", null, NewGame)
         assert response.statusCode.is2xxSuccessful()
         currentGame = response.body
+        lastHint = currentGame.hint
+    }
+
+    void receivedHint(String expected) {
+        assert lastHint == expected
     }
 
     void guess(String word) {
@@ -52,6 +58,7 @@ class Player {
 
     static class NewGame {
         UUID id
+        String hint
     }
 
     static class GameDetails {

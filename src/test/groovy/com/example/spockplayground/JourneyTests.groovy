@@ -29,6 +29,7 @@ class JourneyTests extends Specification {
         def player = new Player(client, "player-1", "password-1")
 
         player.startNewGame()
+        player.receivedHint("_______")
         player.guess("first-try")
         player.guess("second-try")
         player.guess("third-try")

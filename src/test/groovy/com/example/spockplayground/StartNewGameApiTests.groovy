@@ -36,7 +36,8 @@ class StartNewGameApiTests extends Specification {
         result.andExpect(content().json("""
         {
             "id": "00000000-0000-0000-0000-000000000000",
-            "playerId": "some-player"
+            "playerId": "some-player",
+            "hint": "___________"
         }
         """))
     }
