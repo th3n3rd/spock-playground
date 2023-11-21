@@ -26,7 +26,7 @@ class StartNewGameTests extends Specification {
         newGame.playerId() == "some-player"
     }
 
-    def "new games start with a first hint that reveal the number of characters"(String secretWord, String expectedHint) {
+    def "new games start with a first hint that reveals the number of characters"(String secretWord, String expectedHint) {
         given:
         secretWords.add(secretWord)
 
@@ -44,7 +44,7 @@ class StartNewGameTests extends Specification {
         "abcdefghijklmnopqrstuvwxyz" | "__________________________"
     }
 
-    def "new games gets persisted"() {
+    def "new games get persisted"() {
         when:
         def newGame = useCase.handle("dont-care")
 
@@ -52,7 +52,7 @@ class StartNewGameTests extends Specification {
         !games.findById(newGame.id()).empty
     }
 
-    def "new games gets assigned a random secret word"() {
+    def "new games get assigned a (potentially random) secret word"() {
         given:
         secretWords.add("first")
         secretWords.add("second")

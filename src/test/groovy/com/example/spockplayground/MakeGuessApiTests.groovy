@@ -75,7 +75,7 @@ class MakeGuessApiTests extends Specification {
     }
 
     @WithSomePlayer
-    def "make a guess non another player's game is not allowed"() {
+    def "make a guess on another player's game is not allowed"() {
         given:
         def game = games.save(newGame("another-player"))
 
