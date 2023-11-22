@@ -1,4 +1,5 @@
-package com.example.spockplayground
+package com.example.spockplayground.gameplay
+
 
 import com.example.spockplayground.common.InMemoryEvents
 import spock.lang.Specification

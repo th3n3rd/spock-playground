@@ -1,4 +1,4 @@
-package com.example.spockplayground;
+package com.example.spockplayground.gameplay;
 
 import java.util.UUID;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;

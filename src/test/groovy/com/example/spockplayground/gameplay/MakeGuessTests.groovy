@@ -1,9 +1,10 @@
-package com.example.spockplayground
+package com.example.spockplayground.gameplay
+
 
 import com.example.spockplayground.common.InMemoryEvents
 import spock.lang.Specification
 
-import static com.example.spockplayground.GamesMother.*
+import static GamesMother.*
 
 class MakeGuessTests extends Specification {
 

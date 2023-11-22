@@ -1,8 +1,8 @@
 package com.example.spockplayground.leaderboard;
 
-import com.example.spockplayground.GameStarted;
-import com.example.spockplayground.GameWon;
 import com.example.spockplayground.common.Events;
+import com.example.spockplayground.gameplay.GameStarted;
+import com.example.spockplayground.gameplay.GameWon;
 import org.springframework.stereotype.Component;
 
 @Component

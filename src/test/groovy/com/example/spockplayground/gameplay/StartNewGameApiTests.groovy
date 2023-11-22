@@ -1,5 +1,7 @@
-package com.example.spockplayground
+package com.example.spockplayground.gameplay
 
+
+import com.example.spockplayground.WithSomePlayer
 import com.example.spockplayground.common.InMemoryEvents
 import com.example.spockplayground.common.WebSecurityConfig
 import org.spockframework.spring.SpringSpy
@@ -9,7 +11,7 @@ import org.springframework.context.annotation.Import
 import org.springframework.test.web.servlet.MockMvc
 import spock.lang.Specification
 
-import static com.example.spockplayground.GamesMother.newGame
+import static GamesMother.newGame
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status

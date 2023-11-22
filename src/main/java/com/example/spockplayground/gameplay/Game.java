@@ -1,4 +1,4 @@
-package com.example.spockplayground;
+package com.example.spockplayground.gameplay;
 
 import io.soabase.recordbuilder.core.RecordBuilder;
 import java.util.UUID;

@@ -1,4 +1,4 @@
-package com.example.spockplayground;
+package com.example.spockplayground.gameplay;
 
 import com.example.spockplayground.common.Events;
 import java.util.UUID;

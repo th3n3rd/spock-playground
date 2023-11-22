@@ -1,4 +1,4 @@
-package com.example.spockplayground
+package com.example.spockplayground.gameplay
 
 class GamesMother {
 

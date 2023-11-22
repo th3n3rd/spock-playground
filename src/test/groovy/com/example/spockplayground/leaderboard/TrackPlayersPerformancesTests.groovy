@@ -1,17 +1,15 @@
 package com.example.spockplayground.leaderboard
 
-import com.example.spockplayground.GameStarted
-import com.example.spockplayground.GameWon
-import com.example.spockplayground.GuessMade
 import com.example.spockplayground.common.InMemoryEvents
+import com.example.spockplayground.gameplay.GameStarted
+import com.example.spockplayground.gameplay.GameWon
+import com.example.spockplayground.gameplay.GuessMade
 import spock.lang.Specification
-
-import static com.example.spockplayground.GamesMother.anyGameId
 
 class TrackPlayersPerformancesTests extends Specification {
 
-    def firstGameId = anyGameId()
-    def secondGameId = anyGameId()
+    def firstGameId = UUID.randomUUID()
+    def secondGameId = UUID.randomUUID()
     def player1 = "player-1"
     def player2 = "player-2"
 
