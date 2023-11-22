@@ -1,5 +1,6 @@
 package com.example.spockplayground
 
+import com.example.spockplayground.common.InMemoryEvents
 import com.example.spockplayground.common.WebSecurityConfig
 import org.spockframework.spring.SpringSpy
 import org.springframework.beans.factory.annotation.Autowired

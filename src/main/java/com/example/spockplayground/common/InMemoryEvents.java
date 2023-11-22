@@ -1,4 +1,4 @@
-package com.example.spockplayground;
+package com.example.spockplayground.common;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,7 +8,7 @@ import java.util.function.Consumer;
 import org.springframework.stereotype.Repository;
 
 @Repository
-class InMemoryEvents implements Events {
+public class InMemoryEvents implements Events {
 
     private final List<Object> events = new ArrayList<>();
     private final Map<Class<?>, List<Consumer<?>>> subscribers = new HashMap<>();

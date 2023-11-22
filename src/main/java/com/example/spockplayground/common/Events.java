@@ -1,8 +1,8 @@
-package com.example.spockplayground;
+package com.example.spockplayground.common;
 
 import java.util.function.Consumer;
 
-interface Events {
+public interface Events {
     void publish(Object event);
     <T> void subscribe(Class<T> eventType, Consumer<T> callback);
 }

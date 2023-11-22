@@ -1,5 +1,6 @@
 package com.example.spockplayground
 
+import com.example.spockplayground.common.InMemoryEvents
 import spock.lang.Specification
 
 class StartNewGameTests extends Specification {

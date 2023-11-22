@@ -1,5 +1,6 @@
 package com.example.spockplayground;
 
+import com.example.spockplayground.common.Events;
 import org.springframework.stereotype.Component;
 
 @Component
