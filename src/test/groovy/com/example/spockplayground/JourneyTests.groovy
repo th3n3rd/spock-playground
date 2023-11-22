@@ -30,9 +30,16 @@ class JourneyTests extends Specification {
 
         player.startNewGame()
         player.receivedHint("_______")
+
         player.guess("first-try")
+        player.receivedHint("c______")
+
         player.guess("second-try")
+        player.receivedHint("c_____t")
+
         player.guess("third-try")
+        player.receivedHint("co____t")
+
         player.guess("correct")
 
         expect:
@@ -63,6 +70,7 @@ class JourneyTests extends Specification {
         }
 
         expect:
+        player.receivedHint("correct")
         player.hasLost()
     }
 }

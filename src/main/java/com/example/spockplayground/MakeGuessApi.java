@@ -23,7 +23,7 @@ class MakeGuessApi {
     @PostMapping("/games/{id}/guesses")
     GuessMade handle(@PathVariable UUID id, @RequestBody Guess guess, @AuthenticationPrincipal UserDetails player) {
         var game = useCase.handle(id, player.getUsername(), guess.word());
-        return new GuessMade(game.id(), game.playerId(), game.attempts());
+        return new GuessMade(game.id(), game.playerId(), game.hint(), game.attempts());
     }
 
     @ExceptionHandler(GameForbidden.class)
@@ -39,5 +39,5 @@ class MakeGuessApi {
     void onGameNotFound() {}
 
     record Guess(String word) {}
-    record GuessMade(UUID id, String playerId, int attempts) {}
+    record GuessMade(UUID id, String playerId, String hint, int attempts) {}
 }

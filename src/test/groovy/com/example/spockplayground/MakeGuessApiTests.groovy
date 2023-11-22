@@ -40,6 +40,7 @@ class MakeGuessApiTests extends Specification {
         {
             "id": "00000000-0000-0000-0000-000000000000",
             "playerId": "some-player",
+            "hint": "s__________",
             "attempts": 1
         }
         """))

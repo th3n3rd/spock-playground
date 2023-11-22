@@ -8,7 +8,7 @@ record Game(UUID id, String playerId, String secretWord, int attempts, boolean w
     }
 
     Game(UUID id, String playerId, String secretWord, int attempts, boolean won) {
-        this(id, playerId, secretWord, attempts, won, "_".repeat(secretWord.length()));
+        this(id, playerId, secretWord, attempts, won, new HintProgression(secretWord).nextHint(attempts));
     }
 
     public Game guess(String playerId, String word) {

@@ -22,6 +22,19 @@ class MakeGuessTests extends Specification {
         game.attempts() == 2
     }
 
+    def "any new guess generates a better hint for the game"() {
+        given:
+        def game = games.save(newGame())
+
+        when:
+        def firstHint = useCase.handle(game.id(), game.playerId(), "first-try").hint()
+        def secondHint = useCase.handle(game.id(), game.playerId(), "second-try").hint()
+
+        then:
+        firstHint.size() > 0
+        secondHint.count("_") < firstHint.count("_")
+    }
+
     def "successful guesses record a win in the game"() {
         given:
         def game = games.save(newGame())

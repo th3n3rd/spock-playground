@@ -24,8 +24,9 @@ class Player {
     }
 
     void guess(String word) {
-        def response = client.postForEntity("/games/{id}/guesses", [word: word], Void, currentGame.id)
+        def response = client.postForEntity("/games/{id}/guesses", [word: word], GuessMade, currentGame.id)
         assert response.statusCode.is2xxSuccessful()
+        lastHint = response.body.hint
     }
 
     void hasWon() {
@@ -58,6 +59,10 @@ class Player {
 
     static class NewGame {
         UUID id
+        String hint
+    }
+
+    static class GuessMade {
         String hint
     }
 
