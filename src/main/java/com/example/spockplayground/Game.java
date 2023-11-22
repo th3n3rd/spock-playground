@@ -2,13 +2,10 @@ package com.example.spockplayground;
 
 import java.util.UUID;
 
-record Game(UUID id, String playerId, String secretWord, int attempts, boolean won, String hint) {
+record Game(UUID id, String playerId, String secretWord, int attempts, boolean won) {
+
     Game(UUID id, String playerId, String secretWord) {
         this(id, playerId, secretWord, 0, false);
-    }
-
-    Game(UUID id, String playerId, String secretWord, int attempts, boolean won) {
-        this(id, playerId, secretWord, attempts, won, new HintProgression(secretWord).nextHint(attempts));
     }
 
     public Game guess(String playerId, String word) {
@@ -23,5 +20,9 @@ record Game(UUID id, String playerId, String secretWord, int attempts, boolean w
 
     boolean lost() {
         return attempts >= secretWord.length();
+    }
+
+    String hint() {
+        return new HintProgression(secretWord).nextHint(attempts);
     }
 }
