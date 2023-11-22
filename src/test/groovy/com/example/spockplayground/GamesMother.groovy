@@ -10,15 +10,27 @@ class GamesMother {
         return UUID.randomUUID()
     }
 
-    static def newGame(String playerId = testPlayerId) {
-        return new Game(testGameId, playerId, testSecretWord)
+    static def nonExistingGameId() {
+        return anyGameId();
     }
 
-    static def wonGame(String playerId = testPlayerId) {
-        return new Game(testGameId, playerId, testSecretWord, 1, true)
+    static def newGame() {
+        return GameBuilder
+            .builder()
+            .id(testGameId)
+            .playerId(testPlayerId)
+            .secretWord(testSecretWord)
+    }
+
+    static def wonGame() {
+        return newGame()
+            .attempts(1)
+            .won(true)
     }
 
     static def lostGame() {
-        return new Game(testGameId, testPlayerId, testSecretWord, testSecretWord.size(), false)
+        return newGame().with {
+            it.attempts(it.secretWord().size())
+        }
     }
 }

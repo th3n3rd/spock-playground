@@ -26,7 +26,7 @@ class FindGameApiTests extends Specification {
     @WithSomePlayer
     def "retrieve details of an existing game successfully"() {
         given:
-        def game = games.save(newGame("some-player"))
+        def game = games.save(newGame().playerId("some-player").build())
 
         when:
         def result = client.perform(get("/games/{id}", game.id()))
@@ -56,7 +56,7 @@ class FindGameApiTests extends Specification {
     @WithSomePlayer
     def "retrieving details for another player's game is not allowed"() {
         given:
-        def game = games.save(newGame("another-player"))
+        def game = games.save(newGame().playerId("another-player").build())
 
         when:
         def result = client.perform(get("/games/{id}", game.id()))

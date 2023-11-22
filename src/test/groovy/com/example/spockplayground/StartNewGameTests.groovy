@@ -84,6 +84,6 @@ class StartNewGameTests extends Specification {
         def game = useCase.handle("some-player")
 
         then:
-        new GameStarted(game.id(), "some-player") in events.findAll()
+        [new GameStarted(game.id(), "some-player")] == events.findAll()
     }
 }

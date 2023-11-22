@@ -26,7 +26,7 @@ class StartNewGameApiTests extends Specification {
     @WithSomePlayer
     def "starts a new game successfully"() {
         given:
-        useCase.handle("some-player") >> newGame()
+        useCase.handle("some-player") >> newGame().build()
 
         when:
         def result = client.perform(post("/games"))

@@ -25,7 +25,7 @@ class MakeGuessApiTests extends Specification {
     @WithSomePlayer
     def "make any guess"() {
         given:
-        def game = games.save(newGame("some-player"))
+        def game = games.save(newGame().playerId("some-player").build())
 
         when:
         def result = client.perform(
@@ -49,7 +49,7 @@ class MakeGuessApiTests extends Specification {
     @WithSomePlayer
     def "make a guess on a completed game is not allowed"() {
         given:
-        def game = games.save(wonGame("some-player"))
+        def game = games.save(wonGame().playerId("some-player").build())
 
         when:
         def result = client.perform(
@@ -66,7 +66,7 @@ class MakeGuessApiTests extends Specification {
     def "fail to make a guess for a non-existing game"() {
         when:
         def result = client.perform(
-            post("/games/{id}/guesses", anyGameId())
+            post("/games/{id}/guesses", nonExistingGameId())
                 .content("""{ "word": "dont-care" }""")
                 .contentType("application/json")
         )
@@ -78,7 +78,7 @@ class MakeGuessApiTests extends Specification {
     @WithSomePlayer
     def "make a guess on another player's game is not allowed"() {
         given:
-        def game = games.save(newGame("another-player"))
+        def game = games.save(newGame().playerId("another-player").build())
 
         when:
         def result = client.perform(

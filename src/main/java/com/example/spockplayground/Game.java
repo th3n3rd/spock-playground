@@ -1,7 +1,9 @@
 package com.example.spockplayground;
 
+import io.soabase.recordbuilder.core.RecordBuilder;
 import java.util.UUID;
 
+@RecordBuilder
 record Game(UUID id, String playerId, String secretWord, int attempts, boolean won) {
 
     Game(UUID id, String playerId, String secretWord) {

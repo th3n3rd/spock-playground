@@ -12,7 +12,7 @@ class MakeGuessTests extends Specification {
 
     def "any new guess increases the recorded attempts in a game by one"() {
         given:
-        def game = games.save(newGame())
+        def game = games.save(newGame().build())
 
         when:
         game = useCase.handle(game.id(), game.playerId(), "incorrect")
@@ -24,7 +24,7 @@ class MakeGuessTests extends Specification {
 
     def "any new guess generates a better hint for the game"() {
         given:
-        def game = games.save(newGame())
+        def game = games.save(newGame().build())
 
         when:
         def firstHint = useCase.handle(game.id(), game.playerId(), "first-try").hint()
@@ -37,7 +37,7 @@ class MakeGuessTests extends Specification {
 
     def "successful guesses record a win in the game"() {
         given:
-        def game = games.save(newGame())
+        def game = games.save(newGame().build())
 
         when:
         game = useCase.handle(game.id(), game.playerId(), game.secretWord())
@@ -48,7 +48,7 @@ class MakeGuessTests extends Specification {
 
     def "exceeding the max number of attempts record a lost in the game"() {
         given:
-        def game = games.save(newGame())
+        def game = games.save(newGame().secretWord("correct").build())
 
         when:
         for (i in game.secretWord()) {
@@ -61,7 +61,7 @@ class MakeGuessTests extends Specification {
 
     def "making a guess on an already won game is not allowed"() {
         given:
-        def game = games.save(wonGame())
+        def game = games.save(wonGame().build())
 
         when:
         useCase.handle(game.id(), game.playerId(), game.secretWord())
@@ -72,7 +72,7 @@ class MakeGuessTests extends Specification {
 
     def "making a guess on an already lost game is not allowed"() {
         given:
-        def game = games.save(lostGame())
+        def game = games.save(lostGame().build())
 
         when:
         useCase.handle(game.id(), game.playerId(), game.secretWord())
@@ -83,7 +83,7 @@ class MakeGuessTests extends Specification {
 
     def "making a guess on a game started by another player is not allowed"() {
         given:
-        def game = games.save(newGame("player-1"))
+        def game = games.save(newGame().playerId("player-1").build())
 
         when:
         useCase.handle(game.id(), "player-2", game.secretWord())
@@ -94,7 +94,7 @@ class MakeGuessTests extends Specification {
 
     def "fail to make a guess for a non-existing game"() {
         when:
-        useCase.handle(anyGameId(), "dont-care", "dont-care")
+        useCase.handle(nonExistingGameId(), "dont-care", "dont-care")
 
         then:
         thrown(GameNotFound)
@@ -102,7 +102,7 @@ class MakeGuessTests extends Specification {
 
     def "publish a new event when a new guess is made"() {
         given:
-        def game = games.save(newGame("some-player"))
+        def game = games.save(newGame().build())
 
         when:
         game = useCase.handle(game.id(), game.playerId(), "dont-care")
@@ -115,7 +115,7 @@ class MakeGuessTests extends Specification {
 
     def "publish a new event when the correct guess is made and the game is won"() {
         given:
-        def game = games.save(newGame("some-player"))
+        def game = games.save(newGame().playerId("some-player").build())
 
         when:
         game = useCase.handle(game.id(), game.playerId(), game.secretWord())
