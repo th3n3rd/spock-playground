@@ -1,4 +1,4 @@
-package com.example.spockplayground
+package com.example.spockplayground.players
 
 import com.example.spockplayground.common.WebSecurityConfig
 import org.springframework.beans.factory.annotation.Autowired

@@ -1,4 +1,4 @@
-package com.example.spockplayground;
+package com.example.spockplayground.players;
 
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
