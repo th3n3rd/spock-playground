@@ -1,5 +1,8 @@
-package com.example.spockplayground
+package com.example.spockplayground.leaderboard
 
+import com.example.spockplayground.GameStarted
+import com.example.spockplayground.GameWon
+import com.example.spockplayground.GuessMade
 import com.example.spockplayground.common.InMemoryEvents
 import spock.lang.Specification
 

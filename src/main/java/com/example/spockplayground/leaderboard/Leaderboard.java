@@ -1,4 +1,4 @@
-package com.example.spockplayground;
+package com.example.spockplayground.leaderboard;
 
 import java.util.List;
 import java.util.UUID;

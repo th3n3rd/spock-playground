@@ -1,5 +1,7 @@
-package com.example.spockplayground
+package com.example.spockplayground.leaderboard
 
+
+import com.example.spockplayground.WithSomePlayer
 import com.example.spockplayground.common.InMemoryEvents
 import com.example.spockplayground.common.WebSecurityConfig
 import org.springframework.beans.factory.annotation.Autowired

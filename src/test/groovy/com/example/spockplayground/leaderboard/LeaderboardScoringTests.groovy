@@ -1,4 +1,5 @@
-package com.example.spockplayground
+package com.example.spockplayground.leaderboard
+
 
 import spock.lang.Specification
 
