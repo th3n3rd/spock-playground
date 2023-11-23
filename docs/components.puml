@@ -1,0 +1,21 @@
+@startuml
+title DemoApplication
+
+top to bottom direction
+
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Context.puml
+!include https://raw.githubusercontent.com/plantuml-stdlib/C4-PlantUML/master/C4_Component.puml
+
+Container_Boundary("DemoApplication.DemoApplication_boundary", "DemoApplication", $tags="") {
+  Component(DemoApplication.DemoApplication.Common, "Common", "Module", "", $tags="")
+  Component(DemoApplication.DemoApplication.Gameplay, "Gameplay", "Module", "", $tags="")
+  Component(DemoApplication.DemoApplication.Leaderboard, "Leaderboard", "Module", "", $tags="")
+}
+
+Rel_D(DemoApplication.DemoApplication.Leaderboard, DemoApplication.DemoApplication.Common, "uses", $tags="")
+Rel_D(DemoApplication.DemoApplication.Gameplay, DemoApplication.DemoApplication.Common, "uses", $tags="")
+Rel_D(DemoApplication.DemoApplication.Leaderboard, DemoApplication.DemoApplication.Gameplay, "listens to", $tags="")
+
+SHOW_LEGEND(true)
+@enduml

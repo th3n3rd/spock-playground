@@ -1,0 +1,13 @@
+[%autowidth.stretch, cols="h,a"]
+|===
+|Base package
+|`com.example.spockplayground.common`
+|Spring components
+|_Repositories_
+
+* `c.e.s.c.Events` (via `c.e.s.c.InMemoryEvents`)
+
+_Others_
+
+* `c.e.s.c.WebSecurityConfig`
+|===

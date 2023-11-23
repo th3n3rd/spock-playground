@@ -1,0 +1,10 @@
+[%autowidth.stretch, cols="h,a"]
+|===
+|Base package
+|`com.example.spockplayground.leaderboard`
+|Bean references
+|* `c.e.s.c.Events` (in Common)
+|Events listened to
+|* `c.e.s.g.GameStarted`
+* `c.e.s.g.GameWon`
+|===

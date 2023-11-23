@@ -1,0 +1,19 @@
+[%autowidth.stretch, cols="h,a"]
+|===
+|Base package
+|`com.example.spockplayground.gameplay`
+|Spring components
+|_Repositories_
+
+* `c.e.s.g.SecretWords` (via `c.e.s.g.InMemorySecretWords`)
+|Bean references
+|* `c.e.s.c.Events` (in Common)
+|Published events
+|* `c.e.s.g.GameStarted` created by:
+** `c.e.s.g.StartNewGame.handle(…)`
+* `c.e.s.g.GameWon` created by:
+** `c.e.s.g.MakeGuess.handle(…)`
+* `c.e.s.g.GuessMade` created by:
+** `c.e.s.g.MakeGuess.handle(…)`
+
+|===
